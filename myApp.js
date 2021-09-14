@@ -3,22 +3,27 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
 
-/** 2) Create a 'Person' Model */
-var personSchema = new mongoose.Schema({
-  name: String,
-  age: Number,
-  favoriteFoods: [String]
-});
+/** 3) Create and Save a Person */
+var Person = mongoose.model('Person', personSchema);
+
+var createAndSavePerson = function(done) {
+  var samplePerson = new Person({name: "Sample Person", age: 54, favoriteFoods: ["chicken", "water"]});
+
+ samplePerson.save(function(err, data) {
+    if (err) return console.error(err);
+    done(null, data);
+  });
+};
 
 /** 3) Create and Save a Person */
 var Person = mongoose.model('Person', personSchema);
 
 var createAndSavePerson = function(done) {
-  var janeFonda = new Person({name: "Jane Fonda", age: 84, favoriteFoods: ["eggs", "fish", "fresh fruit"]});
+  var samplePerson = new Person({name: "Sample Person", age: 54, favoriteFoods: ["chicken", "water"]});
 
-  janeFonda.save(function(err, data) {
+ samplePerson.save(function(err, data) {
     if (err) return console.error(err);
-    done(null, data)
+    done(null, data);
   });
 };
 
